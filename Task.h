@@ -21,5 +21,6 @@ private:
 
 public:
 	Task(const int& aID, const std::string& aDescription);
+	void Print() const;
 };
 
