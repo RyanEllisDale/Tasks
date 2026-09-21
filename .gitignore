@@ -1,0 +1,9 @@
+.vs/
+x64/
+*.slnx
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
+Task*Tracker*CLI/
+Data/
