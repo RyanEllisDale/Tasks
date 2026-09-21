@@ -2,6 +2,7 @@
 #pragma once
 #include <string>
 #include <ctime>
+#include "json.hpp"
 
 enum TaskStatus
 {
@@ -9,6 +10,12 @@ enum TaskStatus
 	inProgress,
 	complete
 };
+
+NLOHMANN_JSON_SERIALIZE_ENUM(TaskStatus, {
+	{todo, "ToDo"},
+	{inProgress, "In Progress"},
+	{complete, "Completed"},
+})
 
 class Task
 {
@@ -21,6 +28,8 @@ private:
 
 public:
 	Task(const int& aID, const std::string& aDescription);
-	void Print() const;
+	Task(const nlohmann::json& taskJson);
+	void Print(void) const;
+	nlohmann::json ToJson(void);
 };
 

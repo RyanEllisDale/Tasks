@@ -9,6 +9,26 @@ Task::Task(const int& aID, const std::string& aDescription) : id(aID), descripti
 	std::time(&updatedAt);
 }
 
+Task::Task(const nlohmann::json& taskJson)
+{
+	id = taskJson["id"];
+	description = taskJson["description"];
+	status = taskJson["status"];
+	createdAt = taskJson["created at"];
+	updatedAt = taskJson["updated at"];
+}
+
+nlohmann::json Task::ToJson(void)
+{
+	nlohmann::json taskJson;
+	taskJson["id"] = id;
+	taskJson["description"] = description;
+	taskJson["status"] = status;
+	taskJson["created at"] = createdAt;
+	taskJson["updated at"] = updatedAt;
+	return taskJson;
+}
+
 void Task::Print() const
 {
 	std::cout << "Task: " << description << std::endl;
@@ -16,14 +36,13 @@ void Task::Print() const
 	std::string taskStatusStrings[3] = { "Todo", "In Progress", "Completed" };
 	std::cout << "Status: " << taskStatusStrings[status] << std::endl;
 
-
 	struct tm localTime;
 	char buffer[50];
 
 	if (localtime_s(&localTime, &createdAt) == 0)
 	{
 		asctime_s(buffer, sizeof(buffer), &localTime);
-		std::cout << "Created At: Working: " << buffer << std::endl;
+		std::cout << "Created At: Working: " << buffer;
 	}
 	else
 	{
@@ -33,7 +52,7 @@ void Task::Print() const
 	if (localtime_s(&localTime, &updatedAt) == 0)
 	{
 		asctime_s(buffer, sizeof(buffer), &localTime);
-		std::cout << "updated At: Working: " << buffer << std::endl;
+		std::cout << "updated At: Working: " << buffer;
 	}
 	else
 	{
