@@ -5,6 +5,7 @@
 #include <fstream>
 #include "json.hpp"
 #include "Task.h"
+#include "TaskManager.h"
 
 // Checks if there is an existing tasks file and creates one if there is not.
 void CreateTasksFile()
@@ -27,25 +28,9 @@ int main()
 {
 	// Start :
 	std::cout << "Welcome to your Task Tracker !" << std::endl;
+	
 	CreateTasksFile();
-
-	// Reading : 
-	std::ifstream inputTasksFile("Data/tasks.json");
-	nlohmann::json tasksJsonFile = nlohmann::json::parse(inputTasksFile);
-	std::vector<nlohmann::json> jsonTasks = tasksJsonFile["tasks"];
-	inputTasksFile.close();
-
-	// Make Task :
-	Task debugTask(jsonTasks[0]);
-	debugTask.Print();
-
-	// Writing :
-	std::ofstream outputTasksFile("Data/tasks.json");
-	nlohmann::json taskJson = debugTask.ToJson();
-	jsonTasks.push_back(taskJson);
-	tasksJsonFile["tasks"] = jsonTasks;
-	outputTasksFile << std::setw(4) << tasksJsonFile;
-	outputTasksFile.close();
+	TaskManager taskManager;
 
 	while (1)
 	{
@@ -54,6 +39,7 @@ int main()
 		std::cin >> input;
 		std::transform(input.begin(), input.end(), input.begin(), ::tolower);
 
+		// Input Handling : 
 		if (input == "exit")
 		{
 			std::cout << "Thank you for using your Task Tracker !" << std::endl;

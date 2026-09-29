@@ -17,19 +17,16 @@ NLOHMANN_JSON_SERIALIZE_ENUM(TaskStatus, {
 	{complete, "Completed"},
 })
 
-class Task
+struct Task
 {
-private:
-	int id;
-	std::string description = "";
-	TaskStatus status = todo;
-	std::time_t createdAt;
-	std::time_t updatedAt;
+	std::string description = "Default Task Description";
+	std::time_t createdAt = std::time(nullptr);
+	std::time_t updatedAt = std::time(nullptr);
+	int ID = 0;
+	TaskStatus status = todo;	
 
-public:
-	Task(const int& aID, const std::string& aDescription);
-	Task(const nlohmann::json& taskJson);
-	void Print(void) const;
-	nlohmann::json ToJson(void);
+	Task() = default;
+	Task(const std::string& aDescription, const TaskStatus& aStatus = todo, const int aID = 0) : description(aDescription), status(aStatus), ID(aID) {}
+	explicit Task(const nlohmann::json& aTaskJson) : description(aTaskJson["description"]), createdAt(aTaskJson["created at"]), updatedAt(aTaskJson["updated at"]), ID(aTaskJson["id"]), status(aTaskJson["status"]) {}
 };
 
