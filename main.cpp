@@ -46,7 +46,7 @@ bool CreateAppDataFile()
 		// Directory Creation :
 		if (std::filesystem::create_directories(baseDir) == true)
 		{
-			std::cout << "Tasks Directory Not Found, Creating Tasks Directory :\nSuccessfully Created Tasks Directory in " << baseDir << "\n" << std::endl;
+			std::cout << "Tasks Directory Not Found, Creating Tasks Directory\nSuccessfully Created Tasks Directory in " << baseDir << std::endl;
 		}
 
 		// File Creation :
@@ -62,7 +62,7 @@ bool CreateAppDataFile()
 				ouputTasksFile << std::setw(4) << tasksJsonObject;
 				ouputTasksFile.close();
 
-				std::cout << "File created successfully at: " << filePath << std::endl;
+				std::cout << "File created successfully at: " << filePath << std::endl << std::endl;
 				return true;
 			}
 			else
