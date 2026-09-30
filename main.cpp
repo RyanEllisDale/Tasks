@@ -92,10 +92,19 @@ int main(int n, char* args[])
 		return 0;
 	}
 
+	// Basic Print : 
+	TaskManager taskManager;
+	if (n == 1)
+	{
+		taskManager.ListTasksHandle(std::vector<std::string>());
+		return 1;
+	}
+
+
 	// Input :
 	std::string command;
 	std::vector<std::string> subCommands;
-	if (n >= 1)
+	if (n > 1)
 	{
 		command = args[1];
 		std::transform(command.begin(), command.end(), command.begin(), ::tolower);
@@ -109,7 +118,6 @@ int main(int n, char* args[])
 	}
 
 	// Command Lookups:
-	TaskManager taskManager;
 	std::map<std::string, std::function<void(const std::vector<std::string>&)>> commandLookup = {
 		{"hello", PrintHello},
 		{"exit", PrintGoodbye},
